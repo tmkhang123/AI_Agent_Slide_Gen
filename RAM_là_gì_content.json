@@ -1,0 +1,43 @@
+{
+    "title": "Giới thiệu về RAM",
+    "subtitle": "Là phần mềm không thể thiếu trong máy tính và các thiết bị điện tử khác.",
+    "slides": [
+        {
+            "title": "Tổng quan về RAM",
+            "points": [
+                "RAM (Random Access Memory) là một loại bộ nhớ tạm thời.",
+                "Cung cấp không gian lưu trữ tạm thời cho hệ thống."
+            ]
+        },
+        {
+            "title": "Vai trò của RAM",
+            "points": [
+                "Làm trung gian giữa CPU và các thiết bị ngoại vi.",
+                "Cung cấp dữ liệu nhanh chóng cho CPU xử lý."
+            ]
+        },
+        {
+            "title": "Các loại RAM",
+            "points": [
+                "RAM DDR3",
+                "RAM DDR4",
+                "RAM DDR5"
+            ]
+        },
+        {
+            "title": "Cách cài đặt RAM",
+            "points": [
+                "Bước 1: Xác định số lượng RAM cần cài.",
+                "Bước 2: Cài đặt RAM vào khe cắm RAM."
+            ]
+        },
+        {
+            "title": "Lợi ích của việc sử dụng RAM đúng cách",
+            "points": [
+                "Tăng hiệu suất hệ thống",
+                "Giảm thời gian tải ứng dụng",
+                "Cải thiện chất lượng trải nghiệm người dùng"
+            ]
+        }
+    ]
+}

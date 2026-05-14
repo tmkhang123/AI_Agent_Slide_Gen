@@ -1,0 +1,4 @@
+python-pptx
+requests
+python-dotenv
+duckduckgo_search
