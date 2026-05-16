@@ -1,0 +1,46 @@
+{
+    "title": "Chuyên đề: AI là gì?",
+    "subtitle": "Phân tích và định hướng bởi AI Agent",
+    "slides": [
+        {
+            "title": "Giới thiệu về AI là gì?",
+            "points": [
+                "Định nghĩa và bối cảnh",
+                "Tầm quan trọng hiện nay",
+                "Mục tiêu trình bày"
+            ]
+        },
+        {
+            "title": "Phân tích chi tiết",
+            "points": [
+                "Các đặc điểm chính",
+                "Ưu điểm vượt trội",
+                "Cơ sở lý thuyết"
+            ]
+        },
+        {
+            "title": "Ứng dụng thực tế",
+            "points": [
+                "Case study điển hình",
+                "Quy trình triển khai",
+                "Hiệu quả mang lại"
+            ]
+        },
+        {
+            "title": "Thách thức & Giải mã",
+            "points": [
+                "Các khó khăn gặp phải",
+                "Giải pháp tối ưu",
+                "Kinh nghiệm thực tế"
+            ]
+        },
+        {
+            "title": "Kết luận & Q&A",
+            "points": [
+                "Tóm tắt ý chính",
+                "Định hướng tương lai",
+                "Lời chào kết thúc"
+            ]
+        }
+    ]
+}

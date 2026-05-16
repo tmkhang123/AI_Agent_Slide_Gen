@@ -20,11 +20,16 @@ class SlideGenerator:
         title_placeholder = slide.shapes.title
         title_placeholder.text = title
         
-        tf = slide.placeholders[1].text_frame
+        body_shape = slide.placeholders[1]
+        tf = body_shape.text_frame
+        tf.word_wrap = True
+        
         for point in bullet_points:
             p = tf.add_paragraph()
             p.text = point
             p.level = 0
+            # Tự động chỉnh phông chữ nhỏ lại một chút để hiển thị được nhiều nội dung hơn
+            p.font.size = Pt(18)
 
     def save(self, filename="presentation.pptx"):
         self.prs.save(filename)

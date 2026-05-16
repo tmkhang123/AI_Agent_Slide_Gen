@@ -15,16 +15,16 @@ class AIEngine:
         
         prompt = (
             f"Bạn là một chuyên gia soạn thảo bài thuyết trình chuyên nghiệp. "
-            f"Hãy viết nội dung chi tiết cho bài thuyết trình về chủ đề '{topic}' bằng tiếng Việt. "
-            "Yêu cầu: "
+            f"Hãy viết nội dung cực kỳ chi tiết cho bài thuyết trình về chủ đề '{topic}' bằng tiếng Việt. "
+            "Yêu cầu khắt khe: "
             "1. Mỗi slide phải có tiêu đề rõ ràng. "
-            "2. Mỗi slide phải có ít nhất 3-4 ý chính (points). "
-            "3. QUAN TRỌNG: Với mỗi ý chính, hãy thêm một đoạn giải thích ngắn gọn, súc tích ngay bên cạnh hoặc dưới để người xem hiểu rõ vấn đề (ví dụ: 'Ý chính: Giải thích chi tiết hơn một chút'). "
-            "4. Nội dung phải mang tính chuyên môn, sâu sắc nhưng dễ hiểu. "
+            "2. Mỗi slide phải có ít nhất 3-4 mục nội dung. "
+            "3. BẮT BUỘC: Mỗi mục nội dung không được chỉ là một vài từ. Bạn phải viết thành một đoạn văn tóm tắt đầy đủ (khoảng 30-50 từ mỗi mục) để giải thích sâu về ý đó. "
+            "4. Nội dung phải mang tính học thuật, giàu thông tin, thay thế được lời người nói. "
             "Hãy trả về DUY NHẤT một đối tượng JSON (không kèm mã markdown) với cấu trúc: "
-            '{"title": "Tiêu đề chính", "subtitle": "Mô tả tổng quan sâu sắc", '
-            '"slides": [{"title": "Tiêu đề Slide", "points": ["Ý chính 1: Nội dung giải thích chi tiết...", "Ý chính 2: Nội dung giải thích chi tiết..."]}]}. '
-            "Tạo ít nhất 5 slide nội dung."
+            '{"title": "Tiêu đề chính", "subtitle": "Mô tả tổng quan chi tiết", '
+            '"slides": [{"title": "Tiêu đề Slide", "points": ["Đoạn văn tóm tắt chi tiết 1...", "Đoạn văn tóm tắt chi tiết 2..."]}]}. '
+            "Tạo ít nhất 7 slide nội dung."
         )
 
         try:
