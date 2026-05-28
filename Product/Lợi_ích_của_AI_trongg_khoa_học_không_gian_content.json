@@ -1,0 +1,69 @@
+{
+    "title": "Lợi ích của AI trong Khoa học Không gian",
+    "subtitle": "Tìm kiếm hiểu biết mới về vũ trụ với sự hỗ trợ của trí tuệ nhân tạo",
+    "slides": [
+        {
+            "title": "Giới thiệu về AI trong Khoa học Không gian",
+            "points": [
+                "Khoa học không gian đã trở thành một phần quan trọng của cuộc sống hàng ngày",
+                "Lợi ích của AI trong khoa học không gian đã được nhận ra và được áp dụng rộng rãi",
+                "Sự kết hợp giữa khoa học không gian và trí tuệ nhân tạo mang lại lợi ích đáng kể"
+            ],
+            "image_query": "space ai collaboration"
+        },
+        {
+            "title": "Tìm kiếm các ngôi sao mới",
+            "points": [
+                "Dùng AI để phân tích dữ liệu từ các vệ tinh quan sát bầu trời",
+                "Đoạn tuyệt hiệu quả của việc tìm kiếm và nhận dạng các ngôi sao mới trên vũ trụ",
+                "Hỗ trợ cho những khám phá khoa học về cấu trúc và hình thái của bầu trời"
+            ],
+            "image_query": "star discovery galaxy"
+        },
+        {
+            "title": "Tìm kiếm các hành tinh lùn",
+            "points": [
+                "Dùng AI để phân tích dữ liệu từ các thiết bị quan sát trên mặt đất",
+                "Đoạn tuyệt hiệu quả của việc tìm kiếm và nhận dạng các hành tinh mới trên vũ trụ",
+                "Hỗ trợ cho những khám phá khoa học về sự hình thành và phát triển của các hành tinh"
+            ],
+            "image_query": "planet discovery dwarf"
+        },
+        {
+            "title": "Tìm kiếm các tiểu hành tinh",
+            "points": [
+                "Dùng AI để phân tích dữ liệu từ các thiết bị quan sát trên mặt trăng",
+                "Đoạn tuyệt hiệu quả của việc tìm kiếm và nhận dạng các tiểu hành tinh mới trên vũ trụ",
+                "Hỗ trợ cho những khám phá khoa học về sự hình thành và phát triển của hệ thống Mặt Trăng"
+            ],
+            "image_query": "asteroid discovery moon"
+        },
+        {
+            "title": "Tìm kiếm các lỗ đen",
+            "points": [
+                "Dùng AI để phân tích dữ liệu từ các thiết bị quan sát trên sao chổi",
+                "Đoạn tuyệt hiệu quả của việc tìm kiếm và nhận dạng các lỗ đen mới trên vũ trụ",
+                "Hỗ trợ cho những khám phá khoa học về cấu trúc và hình thái của lỗ đen"
+            ],
+            "image_query": "black hole discovery galaxy"
+        },
+        {
+            "title": "Tìm kiếm các sao neutron",
+            "points": [
+                "Dùng AI để phân tích dữ liệu từ các thiết bị quan sát trên ngôi sao",
+                "Đoạn tuyệt hiệu quả của việc tìm kiếm và nhận dạng các sao neutron mới trên vũ trụ",
+                "Hỗ trợ cho những khám phá khoa học về cấu trúc và hình thái của sao neutron"
+            ],
+            "image_query": "neutron star discovery galaxy"
+        },
+        {
+            "title": "Tìm kiếm các thiên hà",
+            "points": [
+                "Dùng AI để phân tích dữ liệu từ các thiết bị quan sát trên bầu trời",
+                "Đoạn tuyệt hiệu quả của việc tìm kiếm và nhận dạng các thiên hà mới trên vũ trụ",
+                "Hỗ trợ cho những khám phá khoa học về cấu trúc và hình thái của thiên hà"
+            ],
+            "image_query": "galaxy discovery universe"
+        }
+    ]
+}

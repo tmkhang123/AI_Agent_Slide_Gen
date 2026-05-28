@@ -3,8 +3,8 @@ setlocal enabledelayedexpansion
 title AI Slides Maker GUI
 color 0B
 
-set PYTHON_EXE="d:\Data\File for Google Drive real\Project\AI_Agent_Slides_Maker\AI_Slide_Agent_Maker\.venv\Scripts\python.exe"
-set APP_PATH=d:\Data\File for Google Drive real\Project\AI_Agent_Slides_Maker\AI_Slide_Agent_Maker\gui_app.py
+set PYTHON_EXE=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\.venv\Scripts\python.exe
+set APP_PATH=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\gui_app.py
 
 if not exist "%PYTHON_EXE%" (
     echo [ERROR] Python environment not found. 

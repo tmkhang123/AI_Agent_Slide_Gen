@@ -9,9 +9,9 @@ echo ============================================================
 echo.
 
 :: Path to the virtual environment python
-set PYTHON_EXE=d:\Data\File for Google Drive real\Project\AI_Agent_Slides_Maker\AI_Slide_Agent_Maker\.venv\Scripts\python.exe
-set SCRIPT_PATH=d:\Data\File for Google Drive real\Project\AI_Agent_Slides_Maker\AI_Slide_Agent_Maker\main.py
-set WATCHER_PATH=d:\Data\File for Google Drive real\Project\AI_Agent_Slides_Maker\AI_Slide_Agent_Maker\watcher.py
+set PYTHON_EXEC:\Users\longh\Desktop\AI_Slide_Agent_Maker\.venv\Scripts\python.exe
+set SCRIPT_PATH=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\main.py
+set WATCHER_PATH=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\watcher.py
 
 :: Check if Python exists
 if not exist "%PYTHON_EXE%" (

@@ -1,0 +1,72 @@
+{
+    "title": "Lợi ích của AI trong khoa học không gian",
+    "subtitle": "Phát triển công nghệ và mở rộng hiểu biết về vũ trụ",
+    "slides": [
+        {
+            "title": "Giới thiệu chung về khoa học không gian",
+            "points": [
+                "Khoa học không gian là lĩnh vực nghiên cứu các hiện tượng và quá trình diễn ra trong vũ trụ, bao gồm cả Trái Đất.",
+                "Khoa học không gian liên quan đến việc tìm hiểu về nguồn gốc của vũ trụ, sự hình thành và phát triển của các thiên hà, sao và hành tinh.",
+                "Khoa học không gian cũng liên quan đến việc nghiên cứu về khí quyển, thủy văn và địa chất trên Trái Đất."
+            ],
+            "image_query": "space exploration"
+        },
+        {
+            "title": "Lợi ích của AI trong khoa học không gian",
+            "points": [
+                "AI giúp tăng cường hiệu suất công việc trong việc phân tích dữ liệu lớn từ các mission không gian.",
+                "AI hỗ trợ việc dự đoán và phân tích các hiện tượng tự nhiên như sự xói mòn của Sao Mộc, thay đổi khí hậu trên Trái Đất.",
+                "AI giúp tìm kiếm và thăm dò các hành tinh mới có thể hỗ trợ cuộc sống con người trong tương lai."
+            ],
+            "image_query": "artificial intelligence space"
+        },
+        {
+            "title": "Ứng dụng của AI trong phân tích dữ liệu không gian",
+            "points": [
+                "AI giúp tăng tốc độ phân tích và xử lý dữ liệu lớn từ các mission không gian.",
+                "AI hỗ trợ việc nhận dạng và phân loại các hình ảnh vệ tinh, giúp cho việc theo dõi biến đổi khí hậu và tài nguyên thiên nhiên trên Trái Đất."
+            ],
+            "image_query": "space satellite data"
+        },
+        {
+            "title": "Ứng dụng của AI trong dự đoán và phân tích hiện tượng tự nhiên",
+            "points": [
+                "AI giúp hỗ trợ việc dự đoán và phân tích các hiện tượng tự nhiên như lốc xoáy, sóng thần, núi lửa hoạt động.",
+                "AI hỗ trợ việc theo dõi biến đổi khí hậu trên Trái Đất qua dữ liệu vệ tinh."
+            ],
+            "image_query": "natural disaster prediction"
+        },
+        {
+            "title": "Ứng dụng của AI trong tìm kiếm và thăm dò các hành tinh mới",
+            "points": [
+                "AI giúp tăng cường hiệu suất công việc trong việc phân tích dữ liệu lớn từ các mission không gian để tìm kiếm các hành tinh mới.",
+                "AI hỗ trợ việc chọn lọc các mục tiêu thăm dò quan trọng nhất trên các hành tinh."
+            ],
+            "image_query": "space exploration robot"
+        },
+        {
+            "title": "Chống lại khó khăn trong ứng dụng AI trong khoa học không gian",
+            "points": [
+                "Khó khăn khi áp dụng AI vào khoa học không gian là do thiếu dữ liệu, phức tạp và đa dạng của dữ liệu vệ tinh.",
+                "Cần phải đầu tư lớn về vốn để phát triển công nghệ cho các mission không gian."
+            ],
+            "image_query": "space exploration challenges"
+        },
+        {
+            "title": "Tìm kiếm giải pháp để ứng dụng AI trong khoa học không gian",
+            "points": [
+                "Cần phải phối hợp giữa các chuyên gia về AI và chuyên gia về khoa học không gian để tạo ra những sản phẩm có ích.",
+                "Phải liên tục cập nhật và nâng cấp công nghệ cũng như phương tiện kỹ thuật để theo kịp tiến bộ của khoa học không gian."
+            ],
+            "image_query": "space exploration innovation"
+        },
+        {
+            "title": "Kết luận",
+            "points": [
+                "AI đang đóng vai trò quan trọng trong việc mở rộng hiểu biết về vũ trụ.",
+                "Cần phải tiếp tục đầu tư và phát triển công nghệ để ứng dụng AI vào khoa học không gian."
+            ],
+            "image_query": "space exploration future"
+        }
+    ]
+}
