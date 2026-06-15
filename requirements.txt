@@ -1,0 +1,9 @@
+python-pptx
+requests
+python-dotenv
+duckduckgo_search
+ddgs
+Pillow
+numpy
+streamlit
+watchdog
