@@ -1,0 +1,54 @@
+{
+    "title": "Lợi ích của ai trong khoa học không gian",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "briefs": [
+        {
+            "title": "Giới thiệu về ứng dụng AI trong khoa học không gian",
+            "role": "intro",
+            "focus": "Trình bày rõ về: Giới thiệu về ứng dụng AI trong khoa học không gian",
+            "image_query": "space ai applications benefits"
+        },
+        {
+            "title": "Lợi ích của AI trong việc phân tích dữ liệu không gian",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Lợi ích của AI trong việc phân tích dữ liệu không gian",
+            "image_query": "space data analysis insights"
+        },
+        {
+            "title": "Ứng dụng AI trong công nghệ định vị và dẫn đường không gian",
+            "role": "application",
+            "focus": "Trình bày rõ về: Ứng dụng AI trong công nghệ định vị và dẫn đường không gian",
+            "image_query": "space navigation guidance systems"
+        },
+        {
+            "title": "Sử dụng AI để cải thiện khả năng dự đoán thời tiết trên Trái Đất",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Sử dụng AI để cải thiện khả năng dự đoán thời tiết trên Trái Đất",
+            "image_query": "earth weather forecasting predictions"
+        },
+        {
+            "title": "Ứng dụng AI trong việc khám phá và nghiên cứu các tiểu hành tinh",
+            "role": "application",
+            "focus": "Trình bày rõ về: Ứng dụng AI trong việc khám phá và nghiên cứu các tiểu hành tinh",
+            "image_query": "asteroid research exploration"
+        },
+        {
+            "title": "Lợi ích của AI trong việc xây dựng và quản lý các trạm không gian",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Lợi ích của AI trong việc xây dựng và quản lý các trạm không gian",
+            "image_query": "space station management construction"
+        },
+        {
+            "title": "Ứng dụng AI trong việc phát hiện và cảnh báo các thiên thạch có khả năng đe dọa Trái Đất",
+            "role": "application",
+            "focus": "Trình bày rõ về: Ứng dụng AI trong việc phát hiện và cảnh báo các thiên thạch có khả năng đe dọa Trái Đất",
+            "image_query": "asteroid detection warning systems"
+        },
+        {
+            "title": "Kết luận về lợi ích của AI trong khoa học không gian",
+            "role": "conclusion",
+            "focus": "Trình bày rõ về: Kết luận về lợi ích của AI trong khoa học không gian",
+            "image_query": "conclusion ai benefits space research"
+        }
+    ]
+}

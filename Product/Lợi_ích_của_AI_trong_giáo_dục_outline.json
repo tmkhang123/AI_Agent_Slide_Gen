@@ -1,0 +1,54 @@
+{
+    "title": "Lợi ích của ai trong giáo dục",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "briefs": [
+        {
+            "title": "Giới thiệu về ứng dụng AI trong giáo dục",
+            "role": "intro",
+            "focus": "Trình bày rõ về: Giới thiệu về ứng dụng AI trong giáo dục",
+            "image_query": "Education AI Applications Overview"
+        },
+        {
+            "title": "Lợi ích của AI trong dạy học",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Lợi ích của AI trong dạy học",
+            "image_query": "AI Teaching Benefits Insights"
+        },
+        {
+            "title": "Tăng cường trải nghiệm học tập",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Tăng cường trải nghiệm học tập",
+            "image_query": "Personalized Learning Experience Enhancement"
+        },
+        {
+            "title": "Hỗ trợ đánh giá và phân tích hiệu suất học tập",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Hỗ trợ đánh giá và phân tích hiệu suất học tập",
+            "image_query": "Assessment and Performance Analysis Support"
+        },
+        {
+            "title": "Tối ưu hóa quá trình giảng dạy và quản lý",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Tối ưu hóa quá trình giảng dạy và quản lý",
+            "image_query": "Efficient Teaching and Management Optimization"
+        },
+        {
+            "title": "Khuyến khích sự sáng tạo và đổi mới trong giáo dục",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Khuyến khích sự sáng tạo và đổi mới trong giáo dục",
+            "image_query": "Innovation and Creativity Fostering"
+        },
+        {
+            "title": "Giảm tải công việc cho giáo viên",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Giảm tải công việc cho giáo viên",
+            "image_query": "Teacher Workload Reduction Strategies"
+        },
+        {
+            "title": "Kết luận về tương lai của AI trong giáo dục",
+            "role": "conclusion",
+            "focus": "Trình bày rõ về: Kết luận về tương lai của AI trong giáo dục",
+            "image_query": "Conclusion Future of AI in Education"
+        }
+    ]
+}

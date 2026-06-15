@@ -1,0 +1,54 @@
+{
+    "title": "Hậu quả của game đối với giới trẻ",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "briefs": [
+        {
+            "title": "Giới thiệu về vấn đề",
+            "role": "intro",
+            "focus": "Trình bày rõ về: Giới thiệu về vấn đề",
+            "image_query": "Gaming Addiction Effects Youth"
+        },
+        {
+            "title": "Hậu quả đối với sức khỏe",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Hậu quả đối với sức khỏe",
+            "image_query": "Health Consequences Gaming"
+        },
+        {
+            "title": "Ảnh hưởng đến mối quan hệ",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Ảnh hưởng đến mối quan hệ",
+            "image_query": "Relationship Impact Gaming"
+        },
+        {
+            "title": "Tác động lên tâm lý",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Tác động lên tâm lý",
+            "image_query": "Psychological Effects Gaming"
+        },
+        {
+            "title": "Sự phụ thuộc vào game",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Sự phụ thuộc vào game",
+            "image_query": "Gaming Addiction Signs Symptoms"
+        },
+        {
+            "title": "Các yếu tố nguy cơ",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Các yếu tố nguy cơ",
+            "image_query": "Risk Factors Contributing Gaming Addiction"
+        },
+        {
+            "title": "Giải pháp để giảm thiểu hậu quả",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Giải pháp để giảm thiểu hậu quả",
+            "image_query": "Solutions Minimizing Gaming Consequences"
+        },
+        {
+            "title": "Kết luận và khuyến nghị",
+            "role": "conclusion",
+            "focus": "Trình bày rõ về: Kết luận và khuyến nghị",
+            "image_query": "Conclusion Recommendations"
+        }
+    ]
+}

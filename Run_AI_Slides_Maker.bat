@@ -1,39 +1,40 @@
 @echo off
 setlocal enabledelayedexpansion
-title AI Slides Maker - GitHub Copilot Edition
+title AI Slides Maker - 3 Agent Edition
 color 0B
 
-echo ============================================================
-echo           WELCOME TO AI SLIDES MAKER AGENT
-echo ============================================================
-echo.
+:: ============================================================
+::  CAU HINH DUONG DAN  (sua PROJECT_DIR cho dung may cua ban)
+:: ============================================================
+set "PROJECT_DIR=C:\Users\longh\Desktop\AI_Slide_Agent_Maker"
+set "PYTHON_EXE=%PROJECT_DIR%\.venv\Scripts\python.exe"
+set "SCRIPT_PATH=%PROJECT_DIR%\main.py"
+set "WATCHER_PATH=%PROJECT_DIR%\watcher.py"
+set "PRODUCT_DIR=%PROJECT_DIR%\Product"
 
-:: Path to the virtual environment python
-set PYTHON_EXEC:\Users\longh\Desktop\AI_Slide_Agent_Maker\.venv\Scripts\python.exe
-set SCRIPT_PATH=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\main.py
-set WATCHER_PATH=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\watcher.py
-
-:: Check if Python exists
+:: Kiem tra Python ton tai
 if not exist "%PYTHON_EXE%" (
-    echo [ERROR] Python environment not found at:
-    echo "%PYTHON_EXE%"
-    echo Please make sure the project setup is complete.
+    echo [ERROR] Khong tim thay Python tai:
+    echo    "%PYTHON_EXE%"
+    echo Hay sua lai bien PROJECT_DIR o dau file .bat nay.
     pause
     exit /b
 )
 
+cd /d "%PROJECT_DIR%"
+
 :MENU
 cls
 echo ============================================================
-echo           WELCOME TO AI SLIDES MAKER AGENT
+echo            AI SLIDES MAKER AGENT  (3-Agent)
 echo ============================================================
 echo.
-echo  [1] Create new slides from topic
-echo  [2] Create slides from modified JSON file
-echo  [3] Start WATCH MODE (Auto-update slide when JSON changes)
-echo  [4] Exit
+echo  [1] Tao slide moi tu chu de
+echo  [2] Tao lai slide tu file JSON da chinh
+echo  [3] WATCH MODE (tu cap nhat slide khi JSON thay doi)
+echo  [4] Thoat
 echo.
-set /p OPT="Select an option (1-4): "
+set /p OPT="Chon mot tuy chon (1-4): "
 
 if "%OPT%"=="1" goto RUN_TOPIC
 if "%OPT%"=="2" goto RUN_JSON
@@ -47,62 +48,54 @@ echo.
 goto AFTER_RUN
 
 :RUN_JSON
-:: ... existing JSON selection code ...
-goto AFTER_RUN
-
-:RUN_WATCH
 echo.
-"%PYTHON_EXE%" "%WATCHER_PATH%"
-pause
-goto MENU
-
-:RUN_TOPIC
-echo.
-"%PYTHON_EXE%" "%SCRIPT_PATH%"
-goto AFTER_RUN
-
-:RUN_JSON
-echo.
-echo List of available JSON content files:
+echo Danh sach file noi dung JSON trong thu muc Product\:
 set count=0
-for /f "delims=" %%f in ('dir /b *_content.json') do (
+for /f "delims=" %%f in ('dir /b "%PRODUCT_DIR%\*_content.json" 2^>nul') do (
     set /a count+=1
     set "file_!count!=%%f"
     echo  [!count!] %%f
 )
 
 if %count%==0 (
-    echo [ERROR] No JSON content files found.
+    echo [ERROR] Khong tim thay file *_content.json trong Product\.
     pause
     goto MENU
 )
 
 echo.
-set /p JSON_CHOICE="Select a file number (1-%count%): "
+set /p JSON_CHOICE="Chon so thu tu file (1-%count%): "
 
-:: Validate input and get filename
+:: Lay ten file da chon
 set "SELECTED_FILE=!file_%JSON_CHOICE%!"
 
 if "!SELECTED_FILE!"=="" (
-    echo [ERROR] Invalid selection.
+    echo [ERROR] Lua chon khong hop le.
     pause
     goto RUN_JSON
 )
 
-echo [*] Selected: !SELECTED_FILE!
-"%PYTHON_EXE%" "%SCRIPT_PATH%" "!SELECTED_FILE!"
+echo [*] Da chon: !SELECTED_FILE!
+"%PYTHON_EXE%" "%SCRIPT_PATH%" "%PRODUCT_DIR%\!SELECTED_FILE!"
 goto AFTER_RUN
+
+:RUN_WATCH
+echo.
+echo [*] Bat dau WATCH MODE. Nhan Ctrl+C trong cua so nay de dung.
+"%PYTHON_EXE%" "%WATCHER_PATH%"
+pause
+goto MENU
 
 :AFTER_RUN
 echo.
 echo ============================================================
-echo [DONE] Processing complete.
+echo [DONE] Da xu ly xong.
 echo ============================================================
 echo.
-set /p CHOICE="Do you want to continue? (y/n): "
+set /p CHOICE="Ban co muon tiep tuc? (y/n): "
 
 if /i "%CHOICE%"=="y" goto MENU
 
 echo.
-echo Thank you for using AI Slides Maker! Goodbye.
+echo Cam on ban da su dung AI Slides Maker! Tam biet.
 pause

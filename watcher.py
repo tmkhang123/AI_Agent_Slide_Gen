@@ -39,13 +39,15 @@ def start_watcher():
     print("============================================================")
     print("      AI SLIDES MAKER - WATCH MODE (AGENTIC)                ")
     print("============================================================")
-    print(f"[*] Đang theo dõi các file JSON trong thư mục hiện tại...")
+    print(f"[*] Đang theo dõi các file JSON (gồm cả thư mục con như Product/)...")
     print("[*] Chỉ cần bạn nhấn Save (Ctrl+S) file JSON, Slide sẽ tự update.")
     print("[*] Nhấn Ctrl+C để dừng theo dõi.")
     
     event_handler = JsonChangeHandler(python_exe, script_path)
     observer = Observer()
-    observer.schedule(event_handler, path=".", recursive=False)
+    # recursive=True để bắt được cả các file JSON nằm trong thư mục con
+    # (vd: Product/<ten>_content.json — nơi app thực sự lưu file).
+    observer.schedule(event_handler, path=".", recursive=True)
     observer.start()
     
     try:

@@ -1,86 +1,71 @@
+"""
+gui_app.py — Giao diện Streamlit (kiến trúc 3 AGENT)
+====================================================
+GUI gọi lần lượt 3 agent độc lập và hiển thị tiến trình TỪNG agent ngay trên
+giao diện nhờ callback on_progress:
+
+    topic ─► PlannerAgent ─► ContentAgent ─► DesignerAgent ─► .pptx
+
+Mỗi agent vẫn do một thành viên sở hữu; GUI chỉ là lớp trình bày + ráp nối.
+Sản phẩm trung gian (*_outline.json, *_content.json) được lưu để tương thích
+với watcher.py (watch mode).
+"""
+
 import streamlit as st
 import os
 import json
-import re
-from ai_engine import AIEngine
-from slide_generator import SlideGenerator
-from image_fetcher import ImageFetcher
+
+import llm
+from schema import Outline, Deck
+from agent_planner import PlannerAgent
+from agent_content import ContentAgent
+from agent_designer import DesignerAgent
 
 
-def get_next_version_suffix(product_dir: str, base_name: str) -> str:
-    if not os.path.exists(os.path.join(product_dir, f"{base_name}.pptx")):
-        return ""
-    version = 1
-    pattern = re.compile(rf"^{re.escape(base_name)}_ver_(\d+)\.pptx$")
-    for fname in os.listdir(product_dir):
-        m = pattern.match(fname)
-        if m:
-            v = int(m.group(1))
-            version = max(version, v + 1)
-    return f"_ver_{version}"
+def safe_name(topic: str) -> str:
+    return (
+        "".join(c for c in topic if c.isalnum() or c in (" ", "_"))
+        .rstrip().replace(" ", "_")
+    ) or "presentation"
 
 
 def generate_slides(topic: str, model_name: str, use_images: bool):
     product_dir = "Product"
     os.makedirs(product_dir, exist_ok=True)
+    base = safe_name(topic)
 
     with st.status("Đang khởi tạo AI Agent...", expanded=True) as status:
+        # callback đẩy tiến trình của agent ra giao diện
+        def ui(msg):
+            st.write(f"&nbsp;&nbsp;&nbsp;{msg}", unsafe_allow_html=True)
 
-        # BƯỚC 1: Sinh nội dung
-        st.write(f"**Bước 1** · Đang dùng AI ({model_name}) để sinh nội dung...")
-        ai = AIEngine(model_name=model_name)
-        slides_data = ai.generate_content(topic)
-        safe_name = (
-            "".join(c for c in topic if c.isalnum() or c in (" ", "_"))
-            .rstrip().replace(" ", "_")
-        )
-        json_path = os.path.join(product_dir, f"{safe_name}_content.json")
+        # ── AGENT 1 · PLANNER ────────────────────────────────────────────────
+        st.write(f"**Agent 1 · Planner** — lập dàn ý bằng `{model_name}`")
+        planner = PlannerAgent(model_name=model_name)
+        outline: Outline = planner.plan(topic, on_progress=ui)
+
+        outline_path = os.path.join(product_dir, f"{base}_outline.json")
+        with open(outline_path, "w", encoding="utf-8") as f:
+            json.dump(outline.to_dict(), f, ensure_ascii=False, indent=4)
+        st.write(f"✅ Dàn ý xong — {len(outline.briefs)} slide")
+
+        # ── AGENT 2 · CONTENT ────────────────────────────────────────────────
+        st.write("**Agent 2 · Content** — sinh nội dung chi tiết")
+        content = ContentAgent(model_name=model_name)
+        deck: Deck = content.write(outline, on_progress=ui)
+
+        # Lưu đúng định dạng JSON cũ (tương thích watch mode)
+        json_path = os.path.join(product_dir, f"{base}_content.json")
         with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(slides_data, f, ensure_ascii=False, indent=4)
-        st.write(f"✅ Đã sinh xong nội dung — {len(slides_data['slides'])} slides")
+            json.dump(deck.to_dict(), f, ensure_ascii=False, indent=4)
+        st.write(f"✅ Nội dung xong — {len(deck.slides)} slide")
 
-        # BƯỚC 2: Tìm ảnh
-        title_img    = None
-        image_streams = {}
+        # ── AGENT 3 · DESIGNER ───────────────────────────────────────────────
+        mode = "kèm ảnh minh họa" if use_images else "chỉ văn bản"
+        st.write(f"**Agent 3 · Designer** — dựng PowerPoint ({mode})")
+        designer = DesignerAgent(use_images=use_images)
+        pptx_path = designer.build(deck, product_dir, base, on_progress=ui)
 
-        if use_images:
-            st.write("**Bước 2** · Đang tìm ảnh minh họa...")
-            fetcher = ImageFetcher()
-
-            # Ảnh bìa (title slide)
-            title_query = slides_data.get("title", "")
-            cover_query = title_query if title_query.isascii() else "technology innovation concept"
-            st.write(f"   🖼️ Ảnh bìa: `{cover_query}`")
-            title_img = fetcher.fetch(cover_query)
-            st.write("   ✅ Đã tải ảnh bìa")
-
-            # Ảnh từng slide nội dung
-            for i, slide_data in enumerate(slides_data["slides"]):
-                query = slide_data.get("image_query", "")
-                if query:
-                    st.write(f"   🔍 Slide {i+1}: `{query}`")
-                    stream = fetcher.fetch(query)
-                    image_streams[i] = stream
-                    st.write(f"   ✅ Slide {i+1} xong")
-        else:
-            st.write("**Bước 2** · Bỏ qua tìm ảnh (đã tắt)")
-
-        # BƯỚC 3: Tạo PPTX
-        st.write("**Bước 3** · Đang dựng file PowerPoint...")
-        sg = SlideGenerator()
-        sg.add_title_slide(slides_data["title"], slides_data["subtitle"], title_img)
-
-        for idx, slide_data in enumerate(slides_data["slides"]):
-            st.write(f"   📄 Slide {idx+1}: {slide_data['title']}")
-            sg.add_content_slide(
-                title         = slide_data["title"],
-                bullet_points = slide_data["points"],
-                image_stream  = image_streams.get(idx),
-            )
-
-        ver_suffix = get_next_version_suffix(product_dir, safe_name)
-        pptx_path  = os.path.join(product_dir, f"{safe_name}{ver_suffix}.pptx")
-        sg.save(pptx_path)
         status.update(label="✅ Hoàn tất!", state="complete", expanded=False)
 
     return json_path, pptx_path
@@ -90,7 +75,10 @@ def generate_slides(topic: str, model_name: str, use_images: bool):
 
 st.set_page_config(page_title="AI Slides Maker", page_icon="📊", layout="centered")
 st.title("📊 AI Slides Maker Agent")
-st.markdown("Tạo bài thuyết trình chuyên nghiệp **tự động** bằng AI + hình ảnh minh họa.")
+st.markdown(
+    "Tạo bài thuyết trình chuyên nghiệp **tự động** bằng **3 AI Agent** "
+    "phối hợp: *Planner → Content → Designer*."
+)
 
 with st.sidebar:
     st.header("⚙️ Cấu hình")
@@ -101,11 +89,19 @@ with st.sidebar:
     else:
         st.warning("Chế độ chỉ văn bản — slide sẽ không có ảnh.")
     st.divider()
-    st.caption("Đảm bảo Ollama đang chạy trên máy của bạn.")
+    st.caption("Kiến trúc 3 agent · Đảm bảo Ollama đang chạy trên máy của bạn.")
+    st.caption("Agent 1 Planner · Agent 2 Content · Agent 3 Designer")
+
+    if st.button("🔌 Kiểm tra Ollama", use_container_width=True):
+        ok, msg = llm.check_ollama(model)
+        if ok:
+            st.success(f"Ollama OK — model `{model}` sẵn sàng.")
+        else:
+            st.error(msg)
 
 topic = st.text_input(
     "Nhập chủ đề bạn muốn tạo slide:",
-    placeholder="Ví dụ: Lợi ích của AI trong giáo dục"
+    placeholder="Ví dụ: Lợi ích của AI trong giáo dục",
 )
 
 if st.button("🚀 Tạo Slide ngay", type="primary", use_container_width=True):
@@ -119,15 +115,16 @@ if st.button("🚀 Tạo Slide ngay", type="primary", use_container_width=True):
                     st.download_button(
                         label="📥 Tải xuống PPTX", data=f,
                         file_name=os.path.basename(pptx_file),
-                        mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                        use_container_width=True
+                        mime="application/vnd.openxmlformats-officedocument."
+                             "presentationml.presentation",
+                        use_container_width=True,
                     )
             with col2:
                 with open(json_file, "rb") as f:
                     st.download_button(
                         label="📄 Tải nội dung JSON", data=f,
                         file_name=os.path.basename(json_file),
-                        mime="application/json", use_container_width=True
+                        mime="application/json", use_container_width=True,
                     )
             st.info(f"📁 File đã lưu tại: `{os.path.abspath('.')}/Product/`")
         except Exception as e:
@@ -136,4 +133,4 @@ if st.button("🚀 Tạo Slide ngay", type="primary", use_container_width=True):
         st.warning("⚠️ Vui lòng nhập chủ đề!")
 
 st.divider()
-st.caption("Phát triển bởi AI Agent · Hỗ trợ hình ảnh tự động qua DuckDuckGo")
+st.caption("Phát triển bởi nhóm 3 thành viên · 3 agent độc lập · ảnh tự động qua DuckDuckGo")
