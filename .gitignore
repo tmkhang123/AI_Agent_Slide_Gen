@@ -10,6 +10,8 @@ Product/
 .env.*
 !.env.example
 
+CLAUDE.md
+
 .streamlit/secrets.toml
 
 .DS_Store
