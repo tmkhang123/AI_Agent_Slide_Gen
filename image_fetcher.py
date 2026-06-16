@@ -1,3 +1,4 @@
+import os
 import requests
 import time
 from io import BytesIO
@@ -5,9 +6,9 @@ from io import BytesIO
 _PALETTE = [
     ((30, 39, 97),   (202, 220, 252)),
     ((15, 70, 86),   (93, 202, 165)),
-    ((100, 30, 60),  (240, 193, 209)),
+    ((32, 42, 68),   (180, 200, 240)),  # Thay thế màu nâu tối bằng màu xanh xám an toàn
     ((42, 67, 23),   (144, 198, 83)),
-    ((90, 40, 10),   (239, 159, 39)),
+    ((20, 50, 70),   (150, 190, 220)),  # Thay thế màu nâu bằng xanh dương đậm
 ]
 
 
@@ -78,6 +79,27 @@ class ImageFetcher:
         self.session = requests.Session()
         self.session.headers.update(self._HEADERS)
         self._last = 0.0
+        self._cache_file = "Product/used_image_urls.txt"
+        self._used_urls = set()
+        
+        # Load cross-run cache
+        if os.path.exists(self._cache_file):
+            try:
+                with open(self._cache_file, "r", encoding="utf-8") as f:
+                    for line in f:
+                        if line.strip():
+                            self._used_urls.add(line.strip())
+            except Exception:
+                pass
+
+    def _save_cache(self, url: str):
+        self._used_urls.add(url)
+        try:
+            os.makedirs(os.path.dirname(self._cache_file), exist_ok=True)
+            with open(self._cache_file, "a", encoding="utf-8") as f:
+                f.write(url + "\n")
+        except Exception:
+            pass
 
     def fetch(self, query: str, timeout: int = 10) -> BytesIO:
         """Luôn trả về BytesIO (ảnh thật hoặc placeholder). Không bao giờ None."""
@@ -98,7 +120,9 @@ class ImageFetcher:
         self._last = time.time()
 
     def _try_ddg(self, query: str, timeout: int) -> BytesIO | None:
-        print(f"    [Ảnh] Đang tìm: '{query}'...")
+        negatives = "-template -mockup -lorem -placeholder -layout -cartoon -meme -anime -character -food -hamburger -burger -school -university -document -paper -receipt -text -people -person -college"
+        filtered_query = f"{query} {negatives}"
+        print(f"    [Ảnh] Đang tìm: '{filtered_query[:80]}...' (truy vấn gốc: '{query}')...")
         self._throttle()
         try:
             try:
@@ -106,7 +130,7 @@ class ImageFetcher:
             except ImportError:
                 from duckduckgo_search import DDGS
             with DDGS() as ddgs:
-                results = list(ddgs.images(query, max_results=12,
+                results = list(ddgs.images(filtered_query, max_results=12,
                                            type_image="photo"))
         except Exception as e:
             print(f"    [!] Tìm kiếm thất bại: {e}")
@@ -116,6 +140,9 @@ class ImageFetcher:
             url = item.get("image", "")
             if not url or not url.startswith("http"):
                 continue
+            if url in self._used_urls:
+                print(f"    [Bỏ qua] Ảnh đã được dùng: {url[:50]}...")
+                continue
             if any(url.lower().endswith(x) for x in self._SKIP_EXT):
                 continue
             try:
@@ -124,6 +151,7 @@ class ImageFetcher:
                 if (resp.status_code == 200 and "image" in ctype
                         and len(resp.content) > 8000):
                     print(f"    [OK] {len(resp.content) // 1024} KB")
+                    self._save_cache(url)
                     return BytesIO(resp.content)
             except Exception:
                 continue

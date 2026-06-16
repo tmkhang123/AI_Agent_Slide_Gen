@@ -19,6 +19,7 @@ import llm
 from schema import Outline, Deck
 from agent_planner import PlannerAgent
 from agent_content import ContentAgent
+from agent_reviewer import ReviewerAgent
 from agent_designer import DesignerAgent
 
 
@@ -53,18 +54,24 @@ def generate_slides(topic: str, model_name: str, use_images: bool):
         st.write("**Agent 2 · Content** — sinh nội dung chi tiết")
         content = ContentAgent(model_name=model_name)
         deck: Deck = content.write(outline, on_progress=ui)
+        st.write(f"✅ Nội dung xong — {len(deck.slides)} slide")
 
-        # Lưu đúng định dạng JSON cũ (tương thích watch mode)
+        # ── AGENT 4 · REVIEWER ───────────────────────────────────────────────
+        st.write("**Agent 4 · Reviewer** — kiểm duyệt, tối ưu hóa slide & bôi đậm chữ")
+        reviewer = ReviewerAgent(model_name=model_name)
+        reviewed_deck: Deck = reviewer.review(deck, on_progress=ui)
+
+        # Lưu đúng định dạng JSON đã tối ưu
         json_path = os.path.join(product_dir, f"{base}_content.json")
         with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(deck.to_dict(), f, ensure_ascii=False, indent=4)
-        st.write(f"✅ Nội dung xong — {len(deck.slides)} slide")
+            json.dump(reviewed_deck.to_dict(), f, ensure_ascii=False, indent=4)
+        st.write("✅ Kiểm duyệt xong — đã làm nổi bật từ khóa")
 
         # ── AGENT 3 · DESIGNER ───────────────────────────────────────────────
         mode = "kèm ảnh minh họa" if use_images else "chỉ văn bản"
         st.write(f"**Agent 3 · Designer** — dựng PowerPoint ({mode})")
         designer = DesignerAgent(use_images=use_images)
-        pptx_path = designer.build(deck, product_dir, base, on_progress=ui)
+        pptx_path = designer.build(reviewed_deck, product_dir, base, on_progress=ui)
 
         status.update(label="✅ Hoàn tất!", state="complete", expanded=False)
 

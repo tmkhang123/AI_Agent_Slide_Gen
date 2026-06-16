@@ -3,11 +3,15 @@ setlocal enabledelayedexpansion
 title AI Slides Maker GUI
 color 0B
 
-set PYTHON_EXE=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\.venv\Scripts\python.exe
-set APP_PATH=C:\Users\longh\Desktop\AI_Slide_Agent_Maker\gui_app.py
+:: Tu dong lay thu muc hien tai cua file bat
+set "PROJECT_DIR=%~dp0"
+set "PYTHON_EXE=%PROJECT_DIR%.venv\Scripts\python.exe"
+set "APP_PATH=%PROJECT_DIR%gui_app.py"
 
 if not exist "%PYTHON_EXE%" (
     echo [ERROR] Python environment not found. 
+    echo Hay dam bao rang .venv da duoc khoi tao trong thu muc:
+    echo %PROJECT_DIR%
     pause
     exit /b
 )

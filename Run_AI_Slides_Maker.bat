@@ -4,9 +4,11 @@ title AI Slides Maker - 3 Agent Edition
 color 0B
 
 :: ============================================================
-::  CAU HINH DUONG DAN  (sua PROJECT_DIR cho dung may cua ban)
+::  CAU HINH DUONG DAN (Tu dong xac dinh theo thu muc hien tai)
 :: ============================================================
-set "PROJECT_DIR=C:\Users\longh\Desktop\AI_Slide_Agent_Maker"
+set "PROJECT_DIR=%~dp0"
+if "%PROJECT_DIR:~-1%"=="\" set "PROJECT_DIR=%PROJECT_DIR:~0,-1%"
+
 set "PYTHON_EXE=%PROJECT_DIR%\.venv\Scripts\python.exe"
 set "SCRIPT_PATH=%PROJECT_DIR%\main.py"
 set "WATCHER_PATH=%PROJECT_DIR%\watcher.py"

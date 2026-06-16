@@ -1,0 +1,60 @@
+{
+    "title": "Agent là gì?",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "briefs": [
+        {
+            "title": "**tổng quan về Agent trong Xử lý ngôn ngữ tự nhiên",
+            "role": "intro",
+            "focus": "Trình bày rõ về: **tổng quan về Agent trong Xử lý ngôn ngữ tự nhiên",
+            "image_query": "NLP agent overview natural language processing**"
+        },
+        {
+            "title": "Chương trình nghị sự",
+            "role": "agenda",
+            "focus": "Tóm tắt ngắn gọn cấu trúc và các phần chính của bài thuyết trình.",
+            "image_query": "agenda plan overview document"
+        },
+        {
+            "title": "**định nghĩa và phạm vi ứng dụng của Agent",
+            "role": "intro",
+            "focus": "Trình bày rõ về: **định nghĩa và phạm vi ứng dụng của Agent",
+            "image_query": "agent definition application scope**"
+        },
+        {
+            "title": "**cơ chế vận hành của Agent",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: **cơ chế vận hành của Agent",
+            "image_query": "agent working mechanism algorithm architecture**"
+        },
+        {
+            "title": "**mô hình toán học và thuật toán trong Agent",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: **mô hình toán học và thuật toán trong Agent",
+            "image_query": "mathematical model algorithm optimization problem**"
+        },
+        {
+            "title": "**ứng dụng thực tiễn của Agent trong NLP",
+            "role": "application",
+            "focus": "Trình bày rõ về: **ứng dụng thực tiễn của Agent trong NLP",
+            "image_query": "practical applications natural language processing**"
+        },
+        {
+            "title": "**ví dụ minh họa về Agent trong thực tiễn",
+            "role": "application",
+            "focus": "Trình bày rõ về: **ví dụ minh họa về Agent trong thực tiễn",
+            "image_query": "agent example case study application**"
+        },
+        {
+            "title": "**thách thức và hạn chế trong thiết kế và triển khai Agent",
+            "role": "application",
+            "focus": "Trình bày rõ về: **thách thức và hạn chế trong thiết kế và triển khai Agent",
+            "image_query": "challenges limitations design implementation**"
+        },
+        {
+            "title": "**kết luận và hướng phát triển tương lai của Agent trong NLP",
+            "role": "conclusion",
+            "focus": "Trình bày rõ về: **kết luận và hướng phát triển tương lai của Agent trong NLP",
+            "image_query": "conclusion future direction natural language processing**"
+        }
+    ]
+}

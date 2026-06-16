@@ -1,0 +1,80 @@
+{
+    "title": "Ai là gì?",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "slides": [
+        {
+            "title": "Giới thiệu về AI",
+            "points": [
+                "AI (Tự động hóa trí tuệ) là một phần mềm máy tính có khả năng tự học hỏi và cải thiện từ kinh nghiệm",
+                "Dựa trên dữ liệu và thông tin được cung cấp, AI có thể đưa ra quyết định hoặc thực hiện hành động dựa trên các thuật toán và mô hình được thiết kế trước đó",
+                "Sự phát triển của AI đã mở ra một kỷ nguyên mới trong việc ứng dụng công nghệ vào nhiều lĩnh vực khác nhau như y tế, tài chính, giao thông vận tải"
+            ],
+            "image_query": "artificial intelligence technology innovation"
+        },
+        {
+            "title": "Định nghĩa và phân loại AI",
+            "points": [
+                "AI (Tử động trí tuệ nhân tạo) được định nghĩa là một phần mềm máy tính có khả năng tự học hỏi và cải thiện hiệu suất dựa trên dữ liệu và kinh nghiệm đã có",
+                "Phân loại AI bao gồm: AI ở một, AI ở một và AI lớn, tùy thuộc vào quy mô ứng dụng và độ phức tạp của hệ thống",
+                "Một số ứng dụng chính của AI bao gồm: kiểm tra an ninh mạng, tự động hóa công việc văn phòng, phân tích dữ liệu lớn và hỗ trợ trong y tế"
+            ],
+            "image_query": "definition classification types of AI"
+        },
+        {
+            "title": "Các thành phần cơ bản của AI",
+            "points": [
+                "Kỹ năng học (Machine Learning): là khả năng của máy tính để tự động cải thiện hiệu suất thực hiện một nhiệm vụ dựa trên kinh nghiệm và dữ liệu",
+                "Ngôn ngữ lập trình và kiến trúc máy tính: là nền tảng kỹ thuật cần thiết cho việc xây dựng và vận hành các hệ thống AI, bao gồm ngôn ngữ lập trình như Python, C++, Java, v.v",
+                "Trí tuệ nhân tạo (Artificial Intelligence): là lĩnh vực nghiên cứu về việc tạo ra các hệ thống máy tính có khả năng thực hiện các nhiệm vụ thông minh giống con người, từ nhận thức đến hành động",
+                "Dữ liệu và phân tích dữ liệu: là nguồn cung cấp cho hệ thống AI để học hỏi và cải thiện hiệu suất, đòi hỏi phải xử lý và phân tích dữ liệu lớn và phức tạp"
+            ],
+            "image_query": "basic components of AI system"
+        },
+        {
+            "title": "Ứng dụng thực tế của AI",
+            "points": [
+                "Ứng dụng thực tế của AI có thể thấy rõ ràng trong lĩnh vực y tế như chẩn đoán bệnh một cách chính xác và hiệu quả hơn thông qua phân tích hình ảnh sinh hóa",
+                "Bên cạnh đó, AI còn được ứng dụng rộng rãi trong giao thông vận tải để cải thiện hiệu suất hành trình và giảm thiểu rủi ro trên đường đi",
+                "Ngoài ra, AI còn đóng vai trò quan trọng trong lĩnh vực tài chính giúp các công ty đưa ra quyết định đầu tư sáng suốt hơn thông qua phân tích dữ liệu mạnh mẽ"
+            ],
+            "image_query": "practical applications of AI in industry"
+        },
+        {
+            "title": "Ưu điểm và nhược điểm của AI",
+            "points": [
+                "AI mang lại hiệu suất làm việc cao hơn nhờ khả năng tự động hóa và xử lý dữ liệu lớn",
+                "AI giúp cải thiện chính xác và giảm sai sót trong quá trình phân tích và đưa ra quyết định thông qua việc sử dụng thuật toán và mô hình học máy",
+                "Tuy nhiên, AI cũng có thể gây ra vấn đề về mất việc làm khi các công việc được tự động hóa và phụ thuộc vào dữ liệu chất lượng cao để đảm bảo hiệu suất tốt"
+            ],
+            "image_query": "advantages disadvantages of AI technology"
+        },
+        {
+            "title": "Các kỹ thuật và phương pháp AI",
+            "points": [
+                "Các kỹ thuật Machine Learning (ML) bao gồm Supervised Learning, Unsupervised Learning và Reinforcement Learning, giúp hệ thống tự học hỏi từ dữ liệu và cải thiện hiệu suất",
+                "Phương pháp Deep Learning (DL) sử dụng mạng thần kinh nhân tạo để phân tích và xử lý dữ liệu phức tạp, thường được ứng dụng trong nhận dạng hình ảnh và ngôn ngữ tự nhiên",
+                "Kỹ thuật Nghiên cứu Kỹ thuật (Research and Development) là quá trình phát triển và cải tiến các công nghệ AI thông qua nghiên cứu khoa học và thử nghiệm thực tế",
+                "Các phương pháp và kỹ thuật khác như Trí tuệ nhân tạo dựa trên lý thuyết trò chơi, trí tuệ nhân tạo dựa trên nhận thức và trí tuệ nhân tạo tự chủ cũng đóng vai trò quan trọng trong lĩnh vực AI"
+            ],
+            "image_query": "AI techniques and methods for data analysis"
+        },
+        {
+            "title": "Chức năng và vai trò của AI trong cuộc sống",
+            "points": [
+                "Chức năng chính của AI là hỗ trợ con người giải quyết các vấn đề phức tạp bằng cách phân tích dữ liệu, đưa ra dự đoán và quyết định dựa trên thông tin có sẵn",
+                "AI cũng đóng vai trò quan trọng trong việc cải thiện hiệu suất công việc, giảm thiểu thời gian và chi phí cho các doanh nghiệp và tổ chức",
+                "Ngoài ra, AI còn giúp con người học hỏi và nâng cao kỹ năng một cách tự động hóa và linh hoạt"
+            ],
+            "image_query": "role of AI in daily life decision making"
+        },
+        {
+            "title": "Kết luận về tương lai của AI",
+            "points": [
+                "Trong tương lai gần, AI sẽ tiếp tục được ứng dụng rộng rãi trong nhiều lĩnh vực khác nhau như y tế, giáo dục, sản xuất và quản lý",
+                "Kỹ năng làm việc độc lập và khả năng tự học hỏi của AI sẽ giúp chúng trở thành một công cụ đắc lực cho con người",
+                "Tuy nhiên, cũng cần phải cân nhắc về các vấn đề liên quan đến an toàn và bảo mật khi phát triển và ứng dụng AI"
+            ],
+            "image_query": "conclusion on the future of AI development"
+        }
+    ]
+}

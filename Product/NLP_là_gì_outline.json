@@ -1,0 +1,54 @@
+{
+    "title": "Nlp là gì?",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "briefs": [
+        {
+            "title": "Giới thiệu về NLP",
+            "role": "intro",
+            "focus": "Trình bày rõ về: Giới thiệu về NLP",
+            "image_query": "Natural Language Processing Overview Introduction"
+        },
+        {
+            "title": "Khái niệm và định nghĩa",
+            "role": "intro",
+            "focus": "Trình bày rõ về: Khái niệm và định nghĩa",
+            "image_query": "Concept Definition Explanation"
+        },
+        {
+            "title": "Lịch sử phát triển của NLP",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Lịch sử phát triển của NLP",
+            "image_query": "History Development Evolution"
+        },
+        {
+            "title": "Ứng dụng thực tế của NLP",
+            "role": "application",
+            "focus": "Trình bày rõ về: Ứng dụng thực tế của NLP",
+            "image_query": "Practical Applications Implementation"
+        },
+        {
+            "title": "Các kỹ thuật cơ bản",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Các kỹ thuật cơ bản",
+            "image_query": "Basic Techniques Algorithms Methods"
+        },
+        {
+            "title": "Vai trò của NLP trong AI",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Vai trò của NLP trong AI",
+            "image_query": "Role Artificial Intelligence Integration"
+        },
+        {
+            "title": "Ưu và nhược điểm của NLP",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Ưu và nhược điểm của NLP",
+            "image_query": "Advantages Disadvantages Limitations"
+        },
+        {
+            "title": "Kết luận về NLP",
+            "role": "conclusion",
+            "focus": "Trình bày rõ về: Kết luận về NLP",
+            "image_query": "Conclusion Summary Recap"
+        }
+    ]
+}

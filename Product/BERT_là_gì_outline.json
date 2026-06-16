@@ -1,0 +1,60 @@
+{
+    "title": "Bert là gì?",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "briefs": [
+        {
+            "title": "**tổng quan về xử lý ngôn ngữ tự nhiên",
+            "role": "intro",
+            "focus": "Trình bày rõ về: **tổng quan về xử lý ngôn ngữ tự nhiên",
+            "image_query": "introduction natural language processing ai**"
+        },
+        {
+            "title": "Chương trình nghị sự",
+            "role": "agenda",
+            "focus": "Tóm tắt ngắn gọn cấu trúc và các phần chính của bài thuyết trình.",
+            "image_query": "agenda plan overview document"
+        },
+        {
+            "title": "**cơ chế phân tích cú pháp của BERT",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: **cơ chế phân tích cú pháp của BERT",
+            "image_query": "syntax parsing diagram algorithm**"
+        },
+        {
+            "title": "**vận hành của BERT",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: **vận hành của BERT",
+            "image_query": "bert model training data**"
+        },
+        {
+            "title": "**huấn luyện và áp dụng BERT",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: **huấn luyện và áp dụng BERT",
+            "image_query": "bert training application**"
+        },
+        {
+            "title": "**cơ chế tạo ra vectơ tọa độ ẩn của BERT",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: **cơ chế tạo ra vectơ tọa độ ẩn của BERT",
+            "image_query": "bert vector representation**"
+        },
+        {
+            "title": "**so sánh với các mô hình khác",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: **so sánh với các mô hình khác",
+            "image_query": "comparison other models**"
+        },
+        {
+            "title": "**ứng dụng của BERT trong thực tế",
+            "role": "application",
+            "focus": "Trình bày rõ về: **ứng dụng của BERT trong thực tế",
+            "image_query": "bert application real world**"
+        },
+        {
+            "title": "**kết luận và tương lai của BERT",
+            "role": "conclusion",
+            "focus": "Trình bày rõ về: **kết luận và tương lai của BERT",
+            "image_query": "conclusion future bert**"
+        }
+    ]
+}

@@ -23,6 +23,7 @@ import json
 from schema import Deck, Outline
 from agent_planner import PlannerAgent
 from agent_content import ContentAgent
+from agent_reviewer import ReviewerAgent
 from agent_designer import DesignerAgent
 
 
@@ -39,6 +40,7 @@ class SlidesMakerOrchestrator:
         self.output_dir = output_dir
         self.planner = PlannerAgent(model_name=model_name)
         self.content = ContentAgent(model_name=model_name)
+        self.reviewer = ReviewerAgent(model_name=model_name)
         self.designer = DesignerAgent(use_images=use_images)
         os.makedirs(self.output_dir, exist_ok=True)
 
@@ -52,10 +54,14 @@ class SlidesMakerOrchestrator:
 
         print("\n=== AGENT 2: CONTENT ===")
         deck = self.content.write(outline)
-        content_path = self._save_json(f"{base}_content.json", deck.to_dict())
+        self._save_json(f"{base}_content_raw.json", deck.to_dict())
+
+        print("\n=== AGENT 4: REVIEWER ===")
+        reviewed_deck = self.reviewer.review(deck)
+        content_path = self._save_json(f"{base}_content.json", reviewed_deck.to_dict())
 
         print("\n=== AGENT 3: DESIGNER ===")
-        pptx_path = self.designer.build(deck, self.output_dir, base)
+        pptx_path = self.designer.build(reviewed_deck, self.output_dir, base)
 
         return {"outline": outline_path, "content": content_path, "pptx": pptx_path}
 

@@ -1,0 +1,54 @@
+{
+    "title": "Ai là gì?",
+    "subtitle": "Bài thuyết trình do AI Agent biên soạn",
+    "briefs": [
+        {
+            "title": "Giới thiệu về AI",
+            "role": "intro",
+            "focus": "Trình bày rõ về: Giới thiệu về AI",
+            "image_query": "artificial intelligence technology innovation"
+        },
+        {
+            "title": "Định nghĩa và phân loại AI",
+            "role": "intro",
+            "focus": "Trình bày rõ về: Định nghĩa và phân loại AI",
+            "image_query": "definition classification types of AI"
+        },
+        {
+            "title": "Các thành phần cơ bản của AI",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Các thành phần cơ bản của AI",
+            "image_query": "basic components of AI system"
+        },
+        {
+            "title": "Ứng dụng thực tế của AI",
+            "role": "application",
+            "focus": "Trình bày rõ về: Ứng dụng thực tế của AI",
+            "image_query": "practical applications of AI in industry"
+        },
+        {
+            "title": "Ưu điểm và nhược điểm của AI",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Ưu điểm và nhược điểm của AI",
+            "image_query": "advantages disadvantages of AI technology"
+        },
+        {
+            "title": "Các kỹ thuật và phương pháp AI",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Các kỹ thuật và phương pháp AI",
+            "image_query": "AI techniques and methods for data analysis"
+        },
+        {
+            "title": "Chức năng và vai trò của AI trong cuộc sống",
+            "role": "analysis",
+            "focus": "Trình bày rõ về: Chức năng và vai trò của AI trong cuộc sống",
+            "image_query": "role of AI in daily life decision making"
+        },
+        {
+            "title": "Kết luận về tương lai của AI",
+            "role": "conclusion",
+            "focus": "Trình bày rõ về: Kết luận về tương lai của AI",
+            "image_query": "conclusion on the future of AI development"
+        }
+    ]
+}

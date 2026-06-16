@@ -22,11 +22,14 @@ import re
 from schema import Deck
 from image_fetcher import ImageFetcher
 from slide_generator import SlideGenerator
+import llm
 
 
 class DesignerAgent:
-    def __init__(self, use_images: bool = True):
+    def __init__(self, use_images: bool = True, model_name: str = "llama3.1:8b", api_url: str = llm.GEN_API):
         self.use_images = use_images
+        self.model_name = model_name
+        self.api_url = api_url
         self.fetcher = ImageFetcher()
         self.sg = SlideGenerator()
 
@@ -57,11 +60,13 @@ class DesignerAgent:
         total = len(deck.slides)
         for idx, slide in enumerate(deck.slides, 1):
             emit(f"[Designer] Slide {idx}/{total}: {slide.title}")
-            img = self._decide_image(slide)
+            img = self._decide_image(slide, deck.title, emit)
             self.sg.add_content_slide(
                 title=slide.title,
                 bullet_points=slide.points,
                 image_stream=img,
+                deck_title=deck.title,
+                page_num=idx + 1,
             )
 
         # 3) Lưu file (có versioning) -----------------------------------------
@@ -72,13 +77,103 @@ class DesignerAgent:
         return pptx_path
 
     # ── Quyết định ảnh cho 1 slide ───────────────────────────────────────────
-    def _decide_image(self, slide):
+    def _decide_image(self, slide, deck_title: str, emit):
         if not self.use_images:
             return None
-        query = (slide.image_query or "").strip()
+            
+        # Ưu tiên sinh từ khóa kỹ thuật/an toàn bằng LLM
+        query = self._generate_safe_keyword(slide, deck_title, emit)
+        
+        if not query:
+            # Fallback về từ khóa cũ của Planner nếu LLM thất bại
+            query = (slide.image_query or "").strip()
+            
         if not query:
             return None
-        return self.fetcher.fetch(query)
+            
+        img = self.fetcher.fetch(query)
+        
+        # Guard 2: Validate ảnh sau khi search
+        if img and not self._vision_check_image(img, slide.title, emit):
+            emit("    [!] Ảnh bị từ chối bởi Vision Model, chuyển sang placeholder.")
+            from image_fetcher import _make_placeholder
+            return _make_placeholder(query)
+            
+        return img
+
+    def _vision_check_image(self, img_stream, slide_title, emit) -> bool:
+        """
+        Guard 2: Reject nếu ảnh không có liên quan kỹ thuật (dùng vision model check).
+        (Placeholder: Cần model Llava hoặc GPT-4V để phân tích nội dung ảnh thực tế).
+        """
+        # TODO: Implement vision check using Ollama (llava)
+        return True
+
+    def _generate_safe_keyword(self, slide, deck_title: str, emit) -> str:
+        """
+        Sinh keyword tiếng Anh an toàn, trừu tượng/kỹ thuật bằng LLM.
+        """
+        # Hardcode an toàn cho slide Agenda và Kết luận (tránh ảnh kỹ thuật sai lệch như hamburger, trường học)
+        title_lower = slide.title.lower()
+        if "chương trình" in title_lower or "nghị sự" in title_lower or "mục lục" in title_lower:
+            return "abstract presentation layout vector background"
+        if "kết luận" in title_lower or "tổng kết" in title_lower or "hỏi đáp" in title_lower or "cảm ơn" in title_lower:
+            return "abstract futuristic technology vector background"
+
+        # Nếu slide ít nội dung, fallback
+        if not slide.points or len(slide.points) == 0:
+            return ""
+            
+        points_str = "\n".join(f"- {p}" for p in slide.points[:3])
+        prompt = (
+            "Bạn là một chuyên gia thiết kế và prompt engineer.\n"
+            f"Chủ đề bài thuyết trình: '{deck_title}'\n"
+            f"Tiêu đề slide hiện tại: '{slide.title}'\n"
+            f"Nội dung slide:\n{points_str}\n\n"
+            "NHIỆM VỤ: Tạo ra một cụm từ khóa tìm kiếm tiếng Anh (3-6 từ) để tìm ảnh minh họa nền (background) hoặc sơ đồ (diagram) cho slide này.\n"
+            "QUY TẮC AN TOÀN NGHIÊM NGẶT (CONTENT SAFETY):\n"
+            "1. TỪ CHỐI các từ dễ ra ảnh đời thực, con người, thể thao (ví dụ CẤM: 'development', 'run', 'athlete', 'man', 'human', 'people', 'team', 'working', 'nature', 'sport').\n"
+            "2. CHỈ DÙNG các từ kỹ thuật, trừu tượng, công nghệ (ví dụ: 'network architecture', 'data flow diagram', 'algorithm concept', 'abstract technology background').\n"
+            "3. CHỈ in ra cụm từ khóa bằng TIẾNG ANH, KHÔNG giải thích, KHÔNG có dấu ngoặc kép, KHÔNG có câu chào."
+        )
+        try:
+            response = llm.generate(prompt, self.model_name, self.api_url, num_predict=30, temperature=0.2)
+            query = response.strip(' "\'\n\r.*')
+            
+            # Kiểm tra cơ bản
+            if not query or len(query.split()) > 12 or "nhiệm vụ" in query.lower() or "quy tắc" in query.lower():
+                return ""
+                
+            # Bộ lọc Content Safety cuối cùng (cắt bỏ từ cấm nếu lỡ sinh ra)
+            forbidden = {"man", "woman", "human", "people", "person", "team", "working", "nature", "outdoor", "indoor", "office", "athlete", "run", "development", "sport", "progress", "growth"}
+            clean_words = [w for w in query.lower().split() if w not in forbidden]
+            
+            final_query = " ".join(clean_words[:6])
+            
+            # Guard 1: Validate keyword output trước khi search
+            invalid_phrases = ["cụm", "từ", "khóa", "keyword", "tìm", "kiếm", "tiếng", "bạn", "nhiệm", "vụ", "slide"]
+            has_vietnamese = any(ord(c) > 127 for c in final_query) # Strict English check
+            
+            if len(final_query) < 10 or has_vietnamese or any(p in final_query.lower() for p in invalid_phrases):
+                # Fallback: Trích xuất các từ tiếng Anh/ASCII từ tên slide và chủ đề
+                safe_deck = " ".join([w for w in deck_title.split() if w.isascii() and w.isalnum()])
+                safe_slide = " ".join([w for w in slide.title.split() if w.isascii() and w.isalnum()])
+                
+                fallback = f"{safe_deck} {safe_slide}".strip()
+                if not fallback or len(fallback) < 3:
+                    final_query = "abstract technology diagram"
+                else:
+                    final_query = f"{fallback} abstract diagram"
+                    
+                emit(f"    [Keyword] LLM lỗi/bị cắt cụt, dùng fallback: '{final_query}'")
+            else:
+                emit(f"    [Keyword] LLM tự sinh query: '{final_query}'")
+                
+            return final_query
+            
+        except Exception as e:
+            emit(f"    [Designer] Lỗi sinh keyword: {e}")
+            return ""
 
     # ── Đặt tên phiên bản ────────────────────────────────────────────────────
     @staticmethod

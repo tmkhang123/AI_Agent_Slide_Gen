@@ -18,6 +18,17 @@ from __future__ import annotations
 import llm
 from schema import Outline, Deck, Slide
 
+def get_nlp_warning(text: str) -> str:
+    """Trả về cảnh báo tránh nhầm lẫn NLP chỉ khi văn bản chứa từ 'nlp'."""
+    if not text or "nlp" not in text.lower():
+        return ""
+    return (
+        "\nLƯU Ý QUAN TRỌNG: Hãy hiểu 'NLP' ở đây là "
+        "'Natural Language Processing' (Xử lý ngôn ngữ tự nhiên trong Khoa học máy tính và Trí tuệ nhân tạo), "
+        "hoàn toàn KHÔNG PHẢI 'Neuro-Linguistic Programming' (Lập trình ngôn ngữ tư duy trong tâm lý học). "
+        "Tất cả các nội dung, thuật ngữ và ví dụ phải xoay quanh xử lý ngôn ngữ tự nhiên trong AI.\n"
+    )
+
 
 class ContentAgent:
     def __init__(self, model_name: str = "llama3.1:8b",
@@ -41,22 +52,41 @@ class ContentAgent:
         total = len(outline.briefs)
         emit(f"[Content] Viết nội dung cho {total} slide (theo từng slide)...")
 
+        # Tạo chuỗi dàn ý toàn bài làm ngữ cảnh chung (Global Context)
+        global_outline_str = "\n".join([f"Slide {idx}: {b.title}" for idx, b in enumerate(outline.briefs, 1)])
+
         slides: list[Slide] = []
         for i, brief in enumerate(outline.briefs, 1):
             emit(f"[Content] Slide {i}/{total}: {brief.title}")
-            points = self._points_for(outline.title, brief)
-
-            attempt = 0
-            while len(points) < self.min_points and attempt < self.max_retry:
-                attempt += 1
-                emit(f"[Content]   ↻ thiếu ý, sinh lại (lần {attempt})...")
-                points = self._points_for(outline.title, brief, more=True)
-
-            if len(points) < self.min_points:
-                emit(f"[Content]   ⚠ dùng nội dung dự phòng cho slide {i}.")
-                points = self._fallback_points(brief)
+            
+            # Nếu là slide Mục lục / Chương trình nghị sự, tự động sinh nội dung từ outline
+            clean_title = llm.normalize_vietnamese(brief.title).strip().lower()
+            is_agenda = (
+                brief.role == "agenda" or 
+                "nghị sự" in clean_title or 
+                "mục lục" in clean_title or 
+                "agenda" in clean_title
+            )
+            if is_agenda:
+                agenda_titles = [b.title for b in outline.briefs if b.role not in ("intro", "conclusion") and not ("nghị sự" in llm.normalize_vietnamese(b.title).lower() or "mục lục" in llm.normalize_vietnamese(b.title).lower() or "agenda" in llm.normalize_vietnamese(b.title).lower())]
+                points = [f"Phần {idx}: {title}" for idx, title in enumerate(agenda_titles[:4], 1)]
+                if len(agenda_titles) > 4:
+                    points.append("Các nội dung thảo luận liên quan & Kết luận")
+                emit(f"[Content]   ✔ Tự động điền mục lục với {len(points)} phần.")
             else:
-                emit(f"[Content]   ✔ {len(points)} ý.")
+                points = self._points_for(outline.title, brief, global_outline_str=global_outline_str)
+
+                attempt = 0
+                while len(points) < self.min_points and attempt < self.max_retry:
+                    attempt += 1
+                    emit(f"[Content]   ↻ thiếu ý, sinh lại (lần {attempt})...")
+                    points = self._points_for(outline.title, brief, more=True, global_outline_str=global_outline_str)
+
+                if len(points) < self.min_points:
+                    emit(f"[Content]   ⚠ dùng nội dung dự phòng cho slide {i}.")
+                    points = self._fallback_points(brief)
+                else:
+                    emit(f"[Content]   ✔ {len(points)} ý.")
 
             slides.append(Slide(title=brief.title,
                                 points=points[:4],
@@ -66,23 +96,34 @@ class ContentAgent:
         return Deck(title=outline.title, subtitle=outline.subtitle, slides=slides)
 
     # ── Sinh ý cho 1 slide (văn bản thường) ──────────────────────────────────
-    def _points_for(self, deck_title: str, brief, more: bool = False) -> list[str]:
+    def _points_for(self, deck_title: str, brief, more: bool = False, global_outline_str: str = "") -> list[str]:
         n = self.points_per_slide + (1 if more else 0)
         prompt = (
-            f"Bạn là chuyên gia soạn thuyết trình. Viết nội dung cho MỘT slide.\n"
-            f"Bài thuyết trình: \"{deck_title}\".\n"
-            f"Tiêu đề slide: \"{brief.title}\".\n"
-            f"Trọng tâm: {brief.focus}\n\n"
-            "Yêu cầu:\n"
-            f"- Viết đúng {n} ý.\n"
-            "- Mỗi ý nằm trên MỘT dòng, bắt đầu bằng '- '.\n"
-            "- Mỗi ý là một câu/đoạn HOÀN CHỈNH 25-45 từ, tiếng Việt, học thuật, "
-            "giàu thông tin, không lặp lại tiêu đề.\n"
-            "- KHÔNG viết mở đầu, KHÔNG đánh số, chỉ in các dòng ý."
+            "Bạn là một Giáo sư/Chuyên gia đầu ngành có kiến thức sâu rộng. "
+            "Hãy biên soạn nội dung chuyên sâu, giàu thông tin và mang tính học thuật cao cho MỘT slide.\n\n"
+            f"Chủ đề bài thuyết trình: \"{deck_title}\"\n"
+            "Cấu trúc toàn bài (để tham khảo ngữ cảnh, tránh lặp lại hoặc viết lệch hướng):\n"
+            f"{global_outline_str}\n\n"
+            f"Tiêu đề slide hiện tại: \"{brief.title}\"\n"
+            f"Trọng tâm của slide này: {brief.focus}\n\n"
+            "YÊU CẦU NGHIÊM NGẶT VỀ NỘI DUNG:\n"
+            "- CẤM TUYỆT ĐỐI các câu chung chung, sáo rỗng hoặc mang tính mở đầu/kéo dài (ví dụ: 'Vấn đề này rất quan trọng', 'Cần được phân tích kỹ', 'Khái niệm này có nhiều ứng dụng').\n"
+            "- BẮT BUỘC mỗi ý phải chứa đựng thông tin thực chất: định nghĩa kỹ thuật chính xác, giải thích cơ chế vận hành, hoặc ví dụ thực tế cụ thể.\n"
+            "- CẤM TUYỆT ĐỐI việc tự bịa đặt, chế tạo các số liệu thống kê giả (như tự đặt ra tỷ lệ %, dung lượng bộ nhớ MB, tần số kHz nếu không có dữ liệu thực tế chính xác được thừa nhận). Nếu không có số liệu thực tế chuẩn xác, hãy tập trung giải thích cơ chế kỹ thuật và ứng dụng thực tế.\n"
+            "- CẤM TUYỆT ĐỐI tự dịch sai hoặc bịa ra các thuật ngữ/thuật toán không tồn tại trong literature (ví dụ: không dùng các thuật ngữ lạ như 'thuật toán treo đè' hay 'hanging algorithm' cho thuật toán Viterbi; khi so sánh thuật toán, chỉ đối sánh với các đối thủ có thật như Fano, BCJR, HMM, Dijkstra, tuyệt đối không bịa ra các tên như 'Vantablack' - vốn là một loại vật liệu hấp thụ ánh sáng chứ không phải thuật toán).\n\n"
+            "YÊU CẦU ĐỊNH DẠNG ĐẦU RA (CỰC KỲ QUAN TRỌNG):\n"
+            "1. Tuyệt đối KHÔNG viết phân tích, suy nghĩ hay bất kỳ lời dẫn nào ở phía trước.\n"
+            "2. Bắt đầu câu trả lời bằng dòng phân tách: `---OUTPUT---` (viết hoa, nằm trên dòng riêng).\n"
+            "3. Ngay phía sau dòng `---OUTPUT---`, in ra đúng các ý slide:\n"
+            f"  - Viết đúng {n} ý.\n"
+            "  - Mỗi ý nằm trên MỘT dòng bắt đầu bằng '- '.\n"
+            "  - Mỗi ý là một câu/đoạn hoàn chỉnh từ 25-45 từ, tiếng Việt, hành văn học thuật, chuyên nghiệp.\n"
+            "  - Không thêm bất cứ ký hiệu số thứ tự hay lời dẫn nào dưới dòng `---OUTPUT---`."
+            f"{get_nlp_warning(deck_title + ' ' + brief.title)}"
         )
         try:
             text = llm.generate(prompt, self.model_name, self.api_url,
-                                num_predict=650, temperature=0.7)
+                                num_predict=1200, temperature=0.7)
         except Exception as e:
             print(f"[Content] Lỗi gọi Ollama: {e}")
             return []
