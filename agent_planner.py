@@ -41,7 +41,7 @@ def _format_presentation_title(title: str) -> str:
     if not t:
         return ""
         
-    acronyms = ["nlp", "ai", "gpt", "api", "gui", "llm", "pptx", "json", "cli", "ddg", "cs", "bert", "lstm", "rnn", "cnn", "vit"]
+    acronyms = ["nlp", "ai", "gpt", "api", "gui", "llm", "pptx", "json", "cli", "ddg", "cs", "bert", "lstm", "rnn", "cnn", "vit", "rag", "gan", "vae", "mlp", "svm", "knn", "sql", "nosql", "iot", "ar", "vr", "xr"]
     words = t.split()
     formatted_words = []
     for idx, w in enumerate(words):

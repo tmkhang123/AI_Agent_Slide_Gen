@@ -101,6 +101,16 @@ _LEAK_KEYWORDS = [
     "phản biện & cải thiện",
     "yêu cầu định dạng",
     "yêu cầu nghiêm ngặt",
+    # Cụm mà llama3.1 echo lại từ prompt ReviewerAgent
+    "cần được viết lại",
+    "không phát hiện bất kỳ",
+    "rút gọn các câu",
+    "gạch đầu dòng tối ưu",
+    "câu hoàn chỉnh đầy đủ thông tin",
+    "bắt buộc phải là một câu",
+    "súc tích, cô đọng",
+    "giàu giá trị thông tin",
+    "phát hiện bất kỳ số liệu",
 ]
 
 

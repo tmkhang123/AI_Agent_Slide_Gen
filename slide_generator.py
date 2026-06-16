@@ -57,7 +57,16 @@ def _prepare_bg(stream: BytesIO, w_in: float, h_in: float,
     DPI = 150
     tw, th = int(w_in * DPI), int(h_in * DPI)
     stream.seek(0)
-    img = Image.open(stream).convert("RGB")
+    raw = Image.open(stream)
+    if raw.mode in ("RGBA", "LA", "P"):
+        bg = Image.new("RGB", raw.size, (255, 255, 255))
+        if raw.mode == "P":
+            raw = raw.convert("RGBA")
+        mask = raw.split()[-1] if raw.mode in ("RGBA", "LA") else None
+        bg.paste(raw, mask=mask)
+        img = bg
+    else:
+        img = raw.convert("RGB")
     iw, ih = img.size
     s = max(tw / iw, th / ih)
     img = img.resize((int(iw * s), int(ih * s)), Image.LANCZOS)
@@ -220,8 +229,8 @@ class SlideGenerator:
         subtitle_clean = _strip_markdown(subtitle)
 
         if image_stream is not None:
-            # 1. Nền ảnh full-bleed (blur rất nhẹ)
-            self._pic(slide, _prepare_bg(image_stream, W, H, blur=1.5),
+            # 1. Nền ảnh full-bleed
+            self._pic(slide, _prepare_bg(image_stream, W, H, blur=2),
                       0, 0, W, H)
 
             # 2. Gradient trái-phải: navy đặc bên trái → trong suốt bên phải
@@ -287,17 +296,14 @@ class SlideGenerator:
         BH = 5.4
 
         if image_stream is not None:
-            # Cột trái: Text (chiều rộng 4.8)
-            tb_b = self._tb(slide, 0.5, BT, 4.8, BH)
-            
-            # Cột phải: Ảnh (chiều rộng 3.9)
+            # Split layout: text trái 4.8", ảnh phải 4.0" — không đè nhau
             try:
-                cropped_img = _prepare_bg(image_stream, 3.9, 5.2, blur=0)
-                self._pic(slide, cropped_img, 5.6, BT + 0.05, 3.9, 5.2)
+                img_buf = _prepare_bg(image_stream, 4.0, BH, blur=0)
+                self._pic(slide, img_buf, 5.7, BT, 4.0, BH)
             except Exception as e:
                 print(f"[Designer] Lỗi xử lý ảnh slide '{title_clean}': {e}")
+            tb_b = self._tb(slide, 0.5, BT, 4.8, BH)
         else:
-            # Nếu không có ảnh: Text chiếm toàn bộ chiều rộng
             tb_b = self._tb(slide, 0.5, BT, 9.0, BH)
 
         # Điền các gạch đầu dòng

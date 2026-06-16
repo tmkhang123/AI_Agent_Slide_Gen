@@ -48,13 +48,9 @@ class DesignerAgent:
         emit(f"[Designer] Dựng {len(deck.slides)} slide "
              f"(ảnh: {'BẬT' if self.use_images else 'TẮT'})...")
 
-        # 1) Slide tiêu đề -----------------------------------------------------
-        title_img = None
-        if self.use_images:
-            tq = deck.title if deck.title.isascii() else "technology innovation concept"
-            emit("[Designer] Tìm ảnh bìa...")
-            title_img = self.fetcher.fetch(tq)
-        self.sg.add_title_slide(deck.title, deck.subtitle, title_img)
+        # 1) Slide tiêu đề — luôn dùng nền navy đặc, không fetch ảnh
+        #    (cover là ấn tượng đầu tiên; ảnh từ tên chủ đề ngắn/mơ hồ thường sai)
+        self.sg.add_title_slide(deck.title, deck.subtitle, None)
 
         # 2) Các slide nội dung ------------------------------------------------
         total = len(deck.slides)
